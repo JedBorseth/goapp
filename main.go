@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -37,20 +38,22 @@ func main() {
 
 
     http.ListenAndServe(":8080", nil)
-}
+} 
 
 func root(w http.ResponseWriter, req *http.Request) {
 	if req.URL.Path != "/" {
         errorHandler(w, req, http.StatusNotFound)
         return
     }
-	index := template.Must(template.ParseFiles("index.html"))
+	index, err := template.ParseFiles("index.html", "templates/home.gohtml")
+	if err != nil {
+		log.Fatal(err)
+	} 
 	index.Execute(w, nil)
 }
 func login(w http.ResponseWriter, req *http.Request) {
-	// index := template.Must(template.ParseFiles("login.html"))
-	// index.Execute(w, nil)
-	fmt.Fprint(w, "login")
+	index := template.Must(template.ParseFiles("index.html"))
+	index.Execute(w, nil)
 }
 func css(w http.ResponseWriter, req *http.Request) {
 	http.ServeFile(w, req, "styles/output.css")
