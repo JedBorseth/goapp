@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Messing With Go</title>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
     <link rel="stylesheet" href="./css" />
   </head>
-  <body class="bg-black">
+  <body class="bg-black text-white">
     <nav
       x-data="{ mobileMenuIsOpen: false }"
       @click.away="mobileMenuIsOpen = false"
@@ -27,14 +27,6 @@
         <li>
           <a
             href="#"
-            class="font-bold text-black underline-offset-2 hover:text-black focus:outline-none focus:underline dark:text-white dark:hover:text-white"
-            aria-current="page"
-            >Products</a
-          >
-        </li>
-        <li>
-          <a
-            href="#"
             class="font-medium text-neutral-600 underline-offset-2 hover:text-black focus:outline-none focus:underline dark:text-neutral-300 dark:hover:text-white"
             >Pricing</a
           >
@@ -48,8 +40,8 @@
         </li>
         <li>
           <a
-            href="#"
-            class="font-medium text-neutral-600 underline-offset-2 hover:text-black focus:outline-none focus:underline dark:text-neutral-300 dark:hover:text-white"
+            href="./login"
+            class="font-bold text-black underline-offset-2 hover:text-black focus:outline-none focus:underline dark:text-white dark:hover:text-white"
             >Login</a
           >
         </li>
@@ -143,9 +135,12 @@
         </li>
       </ul>
     </nav>
-    <main>
+    <main class="p-5">
       <div class="min-h-screen grid place-items-center">
-        <h1>Lorem, ipsum.</h1>
+        <div class="text-center">
+          <h1 class="text-3xl">This is your home page</h1>
+          <p class="text-sm">is it bad to roll your own auth?</p>
+        </div>
       </div>
       <article
         class="group grid rounded-md max-w-2xl grid-cols-1 md:grid-cols-8 overflow-hidden border border-neutral-300 bg-neutral-50 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300"
