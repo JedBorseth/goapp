@@ -45,15 +45,20 @@ func root(w http.ResponseWriter, req *http.Request) {
         errorHandler(w, req, http.StatusNotFound)
         return
     }
+	
 	index, err := template.ParseFiles("index.html", "templates/home.gohtml")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(err) 
 	} 
-	index.Execute(w, nil)
+	data := make(map[string]string)
+	data["title"] = "Jedders | Home"
+	index.Execute(w, data)
 }
 func login(w http.ResponseWriter, req *http.Request) {
 	index := template.Must(template.ParseFiles("index.html"))
-	index.Execute(w, nil)
+	data := make(map[string]string)
+	data["title"] = "Jedders | Login"
+	index.Execute(w, data)
 }
 func css(w http.ResponseWriter, req *http.Request) {
 	http.ServeFile(w, req, "styles/output.css")
