@@ -12,12 +12,13 @@ import (
 
 
 func main() { 
+	port := "8080"
 	go tailwindMinify()
     http.HandleFunc("/", root)
     http.HandleFunc("/css", css)
     http.HandleFunc("/headers", headers)
 	http.HandleFunc("/login", login)
-	fmt.Println("Server started at port 8090")
+	fmt.Println("Server started at port" + port)
 	
 	dir := "public"
 	files, err := os.ReadDir(dir)
@@ -37,7 +38,7 @@ func main() {
 	
 
 
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":" + port, nil)
 } 
 
 func root(w http.ResponseWriter, req *http.Request) {
@@ -46,7 +47,7 @@ func root(w http.ResponseWriter, req *http.Request) {
         return
     }
 	
-	index, err := template.ParseFiles("index.html", "templates/home.gohtml")
+	index, err := template.ParseFiles("index.html", "templates/home.html")
 	if err != nil {
 		log.Fatal(err) 
 	} 
@@ -55,7 +56,25 @@ func root(w http.ResponseWriter, req *http.Request) {
 	index.Execute(w, data)
 }
 func login(w http.ResponseWriter, req *http.Request) {
-	index := template.Must(template.ParseFiles("index.html"))
+	if(req.Method == "POST"){
+	req.ParseForm()
+	username := req.Form.Get("username")
+	password := req.Form.Get("password")
+	fmt.Println(username)
+	fmt.Println(password)
+
+
+
+
+	// database storing session ids and whatnot
+		
+	}
+
+
+	index, err := template.ParseFiles("index.html", "templates/login.html")
+	if err != nil {
+		log.Fatal(err)
+	}
 	data := make(map[string]string)
 	data["title"] = "Jedders | Login"
 	index.Execute(w, data)
