@@ -1,15 +1,15 @@
 {{define "data"}}
 
-<div class="min-h-screen grid place-items-center">
+<div class="grid place-items-center">
   <div class="">
     <form
-      action="/login"
-      method="POST"
+      x-data="useForm"
+      x-on:submit.prevent="post"
       class="group flex rounded-md max-w-sm flex-col overflow-hidden border border-neutral-300 bg-neutral-50 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300"
     >
       <div class="overflow-hidden">
         <img
-          src="public/login.jpg"
+          src="/public/login.jpg"
           class="object-cover transition duration-700 ease-out group-hover:scale-105"
           alt="Login Image"
         />
@@ -83,5 +83,41 @@
     </form>
   </div>
 </div>
+<script nonce="a23gbfz9e">
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("useForm", () => ({
+      data() {
+        const inputs = Array.from(this.$el.querySelectorAll("input"));
+        const data = inputs.reduce(
+          (object, key) => ({ ...object, [key.name]: key.value }),
+          {}
+        );
+        return data;
+      },
+
+      async post() {
+        if (
+          this.data().username.length <= 0 ||
+          this.data().password.length <= 0
+        ) {
+          alert("Please fill in the form");
+          return;
+        }
+        const req = await fetch("/signUp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: this.data().username,
+            password: this.data().password,
+          }),
+        });
+        console.log(await req.json());
+        return req;
+      },
+    }));
+  });
+</script>
 
 {{ end }}
